@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+	position: relative;
+	z-index: 10;
 	display: flex;
 	justify-content: space-between;
 	padding: 10px;
@@ -20,7 +22,6 @@ export const AddButton = styled.button`
 	background-color: #fff;
 	border: 1px solid #e5e5e5;
 	border-radius: 5px;
-	padding: 0;
 	cursor: pointer;
 
 	&:hover {
