@@ -14,13 +14,17 @@ export const Container = styled.div`
 `;
 
 export const ItemTitle = styled.p`
-	display: -webkit-box;
-	width: 100%;
+	flex: 1;
 	font-size: 14px;
+	white-space: normal;
+
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
 `;
 
 export const ItemTools = styled.div`

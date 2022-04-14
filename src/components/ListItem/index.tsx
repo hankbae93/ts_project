@@ -1,16 +1,16 @@
 import React from "react";
 import { TypedIcon } from "typed-design-system";
+import { ResourceType } from "../../types";
 import { Container, ItemTitle, ItemTools, ItemButton } from "./style";
 
-const ListItem = () => {
+interface ListItemProps {
+	data: ResourceType;
+}
+
+const ListItem = ({ data }: ListItemProps) => {
 	return (
 		<Container>
-			<ItemTitle>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos error nemo
-				deleniti quibusdam aperiam accusantium similique enim libero quia
-				tenetur sed nesciunt, consequatur at, delectus temporibus qui, rem dicta
-				dolores.
-			</ItemTitle>
+			<ItemTitle>{typeof data === "string" ? data : data.name}</ItemTitle>
 
 			<ItemTools>
 				<ItemButton>

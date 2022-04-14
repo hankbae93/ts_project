@@ -20,7 +20,7 @@ const useLinkModal = () => {
 
 		if (regex.test(value)) {
 			setIsOpen(false);
-			dispatch(addLinkSagaStart({ resourceType: "URL", resource: value }));
+			dispatch(addLinkSagaStart(value));
 			setError(false);
 		} else {
 			setError(true);

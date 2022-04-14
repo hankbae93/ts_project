@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { ResourceType, RootState } from "../../types";
 
 import Adder from "../Adder";
 import List from "../List";
 
 const SideBar = () => {
+	const list = useSelector<RootState, ResourceType[]>(
+		(state) => state.resource.data
+	);
+	useEffect(() => {
+		console.log(list);
+	}, [list]);
 	return (
 		<Container>
 			<Adder />
-			<List />
+			<List list={list} />
 		</Container>
 	);
 };

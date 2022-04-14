@@ -1,13 +1,7 @@
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { ResourceType, ResourceState } from "../../types";
 import { getRandomDelay, getRandom } from "../../utils/getRandom";
-interface ResourceType {
-	resourceType: "URL" | "IMG";
-	resource: string | File;
-}
-interface ResourceState {
-	data: ResourceType[];
-}
 
 const initialState: ResourceState = {
 	data: [],
@@ -71,7 +65,7 @@ function getDatas(datas: ResourceType[]) {
 			await getRandom();
 			const isValidate = getRandom();
 
-			return isValidate && { ...v, resourceType: "IMG" };
+			return isValidate && v;
 		})
 	);
 }

@@ -1,15 +1,18 @@
 import React from "react";
+import { ResourceType } from "../../types";
 import ListItem from "../ListItem";
 import { Container } from "./style";
 
-const List = () => {
+interface ListProps {
+	list: ResourceType[];
+}
+
+const List = ({ list }: ListProps) => {
 	return (
 		<Container>
-			{Array(15)
-				.fill(1)
-				.map((item) => (
-					<ListItem />
-				))}
+			{list.map((item) => (
+				<ListItem data={item} />
+			))}
 		</Container>
 	);
 };
