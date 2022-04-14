@@ -19,14 +19,25 @@ export const AddButton = styled.button`
 	align-items: center;
 	width: 125px;
 	height: 30px;
+	padding: 2px 0 0;
 	font-size: 12px;
 	background-color: #fff;
 	border: 1px solid #e5e5e5;
 	border-radius: 5px;
+	box-sizing: border-box;
 	cursor: pointer;
 
 	&:hover {
 		box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	}
+`;
+
+export const AddUrlButton = styled(AddButton)``;
+export const AddImgButton = styled(AddButton)`
+	line-height: normal;
+
+	& input {
+		display: none;
 	}
 `;
 
