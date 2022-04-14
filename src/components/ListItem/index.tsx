@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { TypedIcon } from "typed-design-system";
-import { ResourceType } from "../../types";
+import { ResourceObjType } from "../../types";
 import { Container, ItemTitle, ItemTools, ItemButton } from "./style";
 
 interface ListItemProps {
-	data: ResourceType;
+	value: ResourceObjType;
 }
 
-const ListItem = ({ data }: ListItemProps) => {
+const ListItem = ({ value }: ListItemProps) => {
+	const [title, setTitle] = useState<string>(value.name);
+
 	return (
 		<Container>
-			<ItemTitle>{typeof data === "string" ? data : data.name}</ItemTitle>
+			<ItemTitle>{title}</ItemTitle>
 
 			<ItemTools>
 				<ItemButton>

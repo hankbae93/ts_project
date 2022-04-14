@@ -5,7 +5,6 @@ import { Layout, SideBar } from "./components";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  /* other styles */
 `;
 
 function App() {

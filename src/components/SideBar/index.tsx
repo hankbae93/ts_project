@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { ResourceType, RootState } from "../../types";
+import { ResourceObjType, RootState } from "../../types";
 
 import Adder from "../Adder";
 import List from "../List";
 
 const SideBar = () => {
-	const list = useSelector<RootState, ResourceType[]>(
+	const list = useSelector<RootState, ResourceObjType[]>(
 		(state) => state.resource.data
 	);
 	useEffect(() => {

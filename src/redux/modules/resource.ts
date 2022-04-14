@@ -1,6 +1,6 @@
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { ResourceType, ResourceState } from "../../types";
+import { ResourceType, ResourceObjType, ResourceState } from "../../types";
 import { getRandomDelay, getRandom } from "../../utils/getRandom";
 
 const initialState: ResourceState = {
@@ -18,7 +18,7 @@ export const { pending, success, fail } = createActions(
 	}
 );
 
-const reducer = handleActions<ResourceState, ResourceType>(
+const reducer = handleActions<ResourceState, ResourceObjType>(
 	{
 		PENDING: (state) => ({
 			...state,
@@ -53,7 +53,9 @@ function* addLinkSaga(action: Action<ResourceType>) {
 		if (!isValidate) {
 			throw new Error("실패");
 		}
-		yield put(success(action.payload));
+		const data = { name: action.payload, data: action.payload };
+		console.log(data);
+		yield put(success(data));
 	} catch (err) {
 		yield put(fail(err));
 	}
