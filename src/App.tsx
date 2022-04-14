@@ -1,10 +1,10 @@
 import React from "react";
-import { Layout } from "./components";
+import { Layout, SideBar } from "./components";
 
 function App() {
 	return (
 		<Layout>
-			<div>1</div>
+			<SideBar />
 		</Layout>
 	);
 }
