@@ -1,6 +1,6 @@
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
-
+import { getRandomDelay, getRandom } from "../../utils/getRandom";
 interface ResourceType {
 	type: "URL" | "IMG";
 	resource: string | File;
@@ -40,6 +40,9 @@ const reducer = handleActions<ResourceState, ResourceType>(
 				}),
 			};
 		},
+		FAIL: (state) => ({
+			...state,
+		}),
 	},
 	initialState,
 	{ prefix }
@@ -53,12 +56,11 @@ export const { addLink } = createActions("ADD_LINK", { prefix });
 function* addLinkSaga(action: Action<ResourceType>) {
 	try {
 		yield put(pending());
-		const randomTimer = () => {
-			setTimeout(() => {
-				console.log("help");
-			}, 1000);
-		};
-		yield call(randomTimer);
+		yield call(getRandomDelay);
+		const isValidate = getRandom();
+		if (!isValidate) {
+			throw new Error("실패");
+		}
 		yield put(success(action.payload));
 	} catch (err) {
 		yield put(fail(err));
