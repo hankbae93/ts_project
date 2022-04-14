@@ -31,4 +31,5 @@ export const ItemTools = styled.div`
 
 export const ItemButton = styled.span`
 	font-size: 19px;
+	cursor: pointer;
 `;
