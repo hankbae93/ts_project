@@ -1,12 +1,22 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+`;
 
 const Layout = ({
 	children,
 }: {
 	children: React.ReactNode;
 }): React.ReactElement => {
-	return <Container>{children}</Container>;
+	return (
+		<>
+			<GlobalStyle />
+			<Container>{children}</Container>
+		</>
+	);
 };
 
 export default Layout;

@@ -10,7 +10,6 @@ const useImgButton = () => {
 		} = e;
 		if (files) {
 			const datas = Array.from(files);
-			console.log(datas);
 			dispatch(addImgSagaStart(datas));
 		}
 	};

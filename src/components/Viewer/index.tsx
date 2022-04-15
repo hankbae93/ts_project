@@ -18,6 +18,7 @@ const Viewer = () => {
 					<TypedIcon icon='close_small' color='black' />
 				</IframeClose>
 			</IframeHead>
+
 			<IframeContent src={getSrc()} />
 		</Container>
 	);
