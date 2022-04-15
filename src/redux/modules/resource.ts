@@ -108,18 +108,26 @@ export const { addLink, addImg } = createActions("ADD_LINK", "ADD_IMG", {
 	prefix,
 });
 
-function* addLinkSaga(action: Action<ResourceType>) {
+function* addLinkSaga(action: Action<string>) {
 	try {
 		yield put(pending());
 		yield call(getRandomDelay);
 		const isValidate = getRandom();
+		let payload = action.payload;
 		if (!isValidate) {
-			throw new Error("실패");
+			yield put(fail(["실패"]));
 		}
-		const data = { name: action.payload, data: action.payload };
+
+		if (payload.includes("www.youtube.com")) {
+			const params = new URL(payload).searchParams;
+			let v = params.get("v");
+			payload = `https://www.youtube.com/embed/${v}`;
+		}
+
+		const data = { name: payload, data: payload };
 		yield put(success([data]));
 	} catch (err) {
-		yield put(fail(err));
+		console.log(err);
 	}
 }
 
@@ -148,7 +156,7 @@ function* addImgSaga(action: Action<File[]>) {
 		);
 		yield put(success(datas.filter((v) => v !== false)));
 	} catch (err) {
-		yield put(fail(err));
+		console.log(err);
 	}
 }
 

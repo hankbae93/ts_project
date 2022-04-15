@@ -8,8 +8,9 @@ export const Container = styled.div`
 `;
 
 export const IframeHead = styled.div`
-	position: relative;
+	word-wrap: nowrap;
 
+	position: relative;
 	height: 50px;
 	padding: 17px;
 	background-color: #fff;
