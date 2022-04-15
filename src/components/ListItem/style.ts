@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { forwardRef } from "react";
 
 export const Container = styled.div`
 	display: flex;
@@ -13,18 +14,23 @@ export const Container = styled.div`
 	box-sizing: border-box;
 `;
 
-export const ItemTitle = styled.p`
+export const ItemTitle = styled.div`
 	flex: 1;
+	width: 100%;
 	font-size: 14px;
-	white-space: normal;
-
-	text-align: left;
-	word-wrap: break-word;
+	overflow: hidden;
 	display: -webkit-box;
+	word-break: break-all;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
-	overflow: hidden;
 	text-overflow: ellipsis;
+	box-sizing: border-box;
+
+	${({ contentEditable }) =>
+		contentEditable &&
+		`
+	border: 1px solid #38A5E1;
+	`}
 `;
 
 export const ItemTools = styled.div`

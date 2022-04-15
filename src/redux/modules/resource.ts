@@ -9,10 +9,11 @@ const initialState: ResourceState = {
 
 const prefix = "resource";
 
-export const { pending, success, fail } = createActions(
+export const { pending, success, fail, update } = createActions(
 	"PENDING",
 	"SUCCESS",
 	"FAIL",
+	"UPDATE",
 	{
 		prefix,
 	}
@@ -33,6 +34,18 @@ const reducer = handleActions<ResourceState, ResourceObjType>(
 		FAIL: (state) => ({
 			...state,
 		}),
+		UPDATE: (state, action) => {
+			const index = state.data.findIndex((v) => {
+				return v.data === action.payload.data;
+			});
+			const newState = [...state.data];
+			newState[index] = action.payload;
+
+			return {
+				...state,
+				data: newState,
+			};
+		},
 	},
 	initialState,
 	{ prefix }
@@ -61,22 +74,20 @@ function* addLinkSaga(action: Action<ResourceType>) {
 	}
 }
 
-function getDatas(datas: ResourceType[]) {
+function getValidation(datas: File[]) {
 	return Promise.all(
-		datas.map(async (v: ResourceType) => {
-			await getRandom();
-			const isValidate = getRandom();
-
-			return isValidate && v;
+		datas.map(async (v: File) => {
+			const isValidate = await getRandom();
+			return isValidate && { name: v.name, data: v };
 		})
 	);
 }
 
-function* addImgSaga(action: Action<ResourceType[]>) {
+function* addImgSaga(action: Action<File[]>) {
 	try {
 		yield put(pending());
-		const datas: (ResourceType | false)[] = yield call(() =>
-			getDatas(action.payload)
+		const datas: (ResourceObjType | false)[] = yield call(() =>
+			getValidation(action.payload)
 		);
 		const fasleCount = datas.filter((v) => v === false);
 		console.log(datas, fasleCount);

@@ -10,9 +10,7 @@ const SideBar = () => {
 	const list = useSelector<RootState, ResourceObjType[]>(
 		(state) => state.resource.data
 	);
-	useEffect(() => {
-		console.log(list);
-	}, [list]);
+
 	return (
 		<Container>
 			<Adder />
