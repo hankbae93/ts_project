@@ -16,6 +16,7 @@ const initialState: ResourceState = {
 	],
 	loading: false,
 	toast: [],
+	selectIndex: null,
 };
 
 const prefix = "resource";
@@ -28,6 +29,8 @@ export const { pending, success, fail, update, deleteItem, deleteToasts } =
 		"UPDATE",
 		"DELETE_ITEM",
 		"DELETE_TOASTS",
+		"SELECT_ITEM",
+		"SELECT_ITEM",
 		{
 			prefix,
 		}

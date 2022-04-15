@@ -24,7 +24,10 @@ export default SideBar;
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
+	position: relative;
+	z-index: 10;
 	width: 280px;
 	height: 100vh;
 	background-color: #f7f7f7;
+	box-shadow: 1px 1px 1px #c4c4c4;
 `;

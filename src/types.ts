@@ -9,6 +9,7 @@ export interface ResourceState {
 	data: ResourceObjType[];
 	loading: boolean;
 	toast: string[];
+	selectIndex: number | null;
 }
 
 /*  리덕스 타입  */
