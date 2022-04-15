@@ -4,7 +4,18 @@ import { ResourceType, ResourceObjType, ResourceState } from "../../types";
 import { getRandomDelay, getRandom } from "../../utils/getRandom";
 
 const initialState: ResourceState = {
-	data: [],
+	data: [
+		{
+			name: "https://www.robinwieruch.de/react-libraries/",
+			data: "https://www.robinwieruch.de/react-libraries/",
+		},
+		{
+			name: "https://typed.blog/how-to-write-a-better-research-paper-faster/",
+			data: "https://typed.blog/how-to-write-a-better-research-paper-faster/",
+		},
+	],
+	loading: false,
+	toast: [],
 };
 
 const prefix = "resource";
@@ -27,9 +38,11 @@ const reducer = handleActions<ResourceState, ResourceObjType>(
 		}),
 		SUCCESS: (state, action) => {
 			const { payload } = action;
+			const newData = [...state.data];
+			newData.unshift(payload);
 			return {
 				...state,
-				data: state.data.concat(payload),
+				data: newData,
 			};
 		},
 		FAIL: (state) => ({
@@ -78,7 +91,6 @@ function* addLinkSaga(action: Action<ResourceType>) {
 			throw new Error("실패");
 		}
 		const data = { name: action.payload, data: action.payload };
-		console.log(data);
 		yield put(success(data));
 	} catch (err) {
 		yield put(fail(err));
