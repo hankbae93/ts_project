@@ -15,10 +15,6 @@ const Viewer = () => {
 		dispatch(selectItem(null));
 	};
 
-	if (selectIndex === null) {
-		return <></>;
-	}
-
 	const getSrc = () => {
 		if (selectIndex !== null) {
 			const value = data[selectIndex].data;
@@ -31,9 +27,13 @@ const Viewer = () => {
 		}
 	};
 
+	if (selectIndex === null) {
+		return <></>;
+	}
+
 	return (
 		<Container>
-			<IframeHead contentEditable>
+			<IframeHead>
 				{selectIndex !== null && data[selectIndex].name}
 				<IframeClose onClick={handleClose}>
 					<TypedIcon icon='close_small' color='black' />
