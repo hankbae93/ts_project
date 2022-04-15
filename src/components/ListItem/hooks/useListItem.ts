@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteItem, selectItem, update } from "../../redux/modules/resource";
-import { ResourceObjType, ResourceState, RootState } from "../../types";
+import {
+	deleteItem,
+	selectItem,
+	update,
+} from "../../../redux/modules/resource";
+import { ResourceObjType, ResourceState, RootState } from "../../../types";
 
 const useListItem = (value: ResourceObjType) => {
 	const dispatch = useDispatch();

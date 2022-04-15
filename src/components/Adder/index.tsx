@@ -7,8 +7,8 @@ import {
 	AddInput,
 	AddLinkError,
 } from "./style";
-import useImgButton from "./useImgButton";
-import useLinkModal from "./useLinkModal";
+import useImgButton from "./hooks/useImgButton";
+import useLinkModal from "./hooks/useLinkModal";
 
 const Adder = () => {
 	const { onSubmit, isOpen, setIsOpen, error } = useLinkModal();

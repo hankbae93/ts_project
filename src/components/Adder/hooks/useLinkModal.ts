@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addLink as addLinkSagaStart } from "../../redux/modules/resource";
+import { addLink as addLinkSagaStart } from "../../../redux/modules/resource";
 
 const useLinkModal = () => {
 	const dispatch = useDispatch();

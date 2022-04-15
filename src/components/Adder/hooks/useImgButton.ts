@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addImg as addImgSagaStart } from "../../redux/modules/resource";
+import { addImg as addImgSagaStart } from "../../../redux/modules/resource";
 
 const useImgButton = () => {
 	const dispatch = useDispatch();

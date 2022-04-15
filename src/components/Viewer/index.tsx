@@ -1,31 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { TypedIcon } from "typed-design-system";
-import { selectItem } from "../../redux/modules/resource";
-import { RootState, ResourceState } from "../../types";
+import useViewer from "./hooks/useViewer";
 import { Container, IframeContent, IframeHead, IframeClose } from "./style";
 
 const Viewer = () => {
-	const dispatch = useDispatch();
-	const { selectIndex, data } = useSelector<RootState, ResourceState>(
-		(state) => state.resource
-	);
-
-	const handleClose = () => {
-		dispatch(selectItem(null));
-	};
-
-	const getSrc = () => {
-		if (selectIndex !== null) {
-			const value = data[selectIndex].data;
-			if (typeof value === "string") {
-				return value;
-			} else if (typeof value === "object") {
-				const objURL = window.URL.createObjectURL(value);
-				return objURL;
-			}
-		}
-	};
+	const { selectIndex, handleClose, getSrc, getTitle } = useViewer();
 
 	if (selectIndex === null) {
 		return <></>;
@@ -34,7 +13,7 @@ const Viewer = () => {
 	return (
 		<Container>
 			<IframeHead>
-				{selectIndex !== null && data[selectIndex].name}
+				{getTitle()}
 				<IframeClose onClick={handleClose}>
 					<TypedIcon icon='close_small' color='black' />
 				</IframeClose>
