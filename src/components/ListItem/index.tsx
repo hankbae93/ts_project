@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ResourceObjType } from "../../types";
 import { TypedIcon } from "typed-design-system";
 import useListItem from "./useListItem";

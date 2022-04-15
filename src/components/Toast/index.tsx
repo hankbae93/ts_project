@@ -16,7 +16,7 @@ const Toast = () => {
 				dispatch(deleteToasts());
 			}, 3000);
 		}
-	}, [toast]);
+	}, [toast, dispatch]);
 
 	return (
 		<Container>

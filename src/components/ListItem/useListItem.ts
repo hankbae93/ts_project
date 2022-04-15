@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItem, selectItem, update } from "../../redux/modules/resource";
 import { ResourceObjType, ResourceState, RootState } from "../../types";
@@ -10,7 +10,10 @@ const useListItem = (value: ResourceObjType) => {
 	);
 	const [text, setText] = useState(value.name);
 	const [isEdit, setIsEdit] = useState(false);
-	const textEl = useRef() as React.MutableRefObject<HTMLDivElement>;
+
+	useEffect(() => {
+		setText(value.name);
+	}, [value]);
 
 	const handleSelect = (e: React.MouseEvent<HTMLDivElement>) => {
 		const index = data.findIndex((v) => v.data === value.data);

@@ -1,6 +1,6 @@
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { ResourceType, ResourceObjType, ResourceState } from "../../types";
+import { ResourceObjType, ResourceState } from "../../types";
 import { getRandomDelay, getRandom } from "../../utils/getRandom";
 
 const initialState: ResourceState = {
@@ -123,6 +123,7 @@ function* addLinkSaga(action: Action<string>) {
 		}
 		const data = { name: payload, data: result };
 		yield put(notice(["성공"]));
+		yield put(selectItem(null));
 		yield put(success([data]));
 	} catch (err) {
 		yield put(notice(["실패"]));
@@ -152,6 +153,7 @@ function* addImgSaga(action: Action<File[]>) {
 				})
 			)
 		);
+		yield put(selectItem(null));
 		yield put(success(datas.filter((v) => v !== false)));
 	} catch (err) {
 		console.log(err);
