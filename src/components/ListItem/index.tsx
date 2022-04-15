@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { TypedIcon } from "typed-design-system";
-import { update } from "../../redux/modules/resource";
+import { deleteItem, update } from "../../redux/modules/resource";
 import { ResourceObjType } from "../../types";
+import { TypedIcon } from "typed-design-system";
+
 import { Container, ItemTitle, ItemTools, ItemButton } from "./style";
 
 interface ListItemProps {
@@ -11,7 +12,6 @@ interface ListItemProps {
 
 const ListItem = ({ value }: ListItemProps) => {
 	const dispatch = useDispatch();
-	const [title, setTitle] = useState<string>(value.name);
 	const [isEdit, setIsEdit] = useState(false);
 	const textEl = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -23,17 +23,21 @@ const ListItem = ({ value }: ListItemProps) => {
 		setIsEdit((prev) => !prev);
 	};
 
+	const handleDelete = () => {
+		dispatch(deleteItem(value));
+	};
+
 	return (
 		<Container>
 			<ItemTitle ref={textEl} contentEditable={isEdit}>
-				{title}
+				{value.name}
 			</ItemTitle>
 
 			<ItemTools>
 				<ItemButton onClick={handleEdit}>
 					<TypedIcon icon='edit_small' color='black' />
 				</ItemButton>
-				<ItemButton>
+				<ItemButton delete onClick={handleDelete}>
 					<TypedIcon icon='trash_small' color='black' />
 				</ItemButton>
 			</ItemTools>

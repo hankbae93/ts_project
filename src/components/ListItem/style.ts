@@ -39,7 +39,7 @@ export const ItemTools = styled.div`
 	gap: 8px;
 `;
 
-export const ItemButton = styled.span`
+export const ItemButton = styled.span<{ delete?: boolean }>`
 	font-size: 19px;
 	cursor: pointer;
 `;

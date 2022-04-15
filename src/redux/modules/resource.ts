@@ -9,11 +9,12 @@ const initialState: ResourceState = {
 
 const prefix = "resource";
 
-export const { pending, success, fail, update } = createActions(
+export const { pending, success, fail, update, deleteItem } = createActions(
 	"PENDING",
 	"SUCCESS",
 	"FAIL",
 	"UPDATE",
+	"DELETE_ITEM",
 	{
 		prefix,
 	}
@@ -40,6 +41,16 @@ const reducer = handleActions<ResourceState, ResourceObjType>(
 			});
 			const newState = [...state.data];
 			newState[index] = action.payload;
+
+			return {
+				...state,
+				data: newState,
+			};
+		},
+		DELETE_ITEM: (state, action) => {
+			const newState = [...state.data].filter((v) => {
+				return v.data !== action.payload.data;
+			});
 
 			return {
 				...state,
