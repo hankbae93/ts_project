@@ -8,7 +8,7 @@ export interface ResourceObjType {
 export interface ResourceState {
 	data: ResourceObjType[];
 	loading: boolean;
-	toast: [];
+	toast: string[];
 }
 
 /*  리덕스 타입  */

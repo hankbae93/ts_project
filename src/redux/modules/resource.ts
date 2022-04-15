@@ -20,34 +20,39 @@ const initialState: ResourceState = {
 
 const prefix = "resource";
 
-export const { pending, success, fail, update, deleteItem } = createActions(
-	"PENDING",
-	"SUCCESS",
-	"FAIL",
-	"UPDATE",
-	"DELETE_ITEM",
-	{
-		prefix,
-	}
-);
+export const { pending, success, fail, update, deleteItem, deleteToasts } =
+	createActions(
+		"PENDING",
+		"SUCCESS",
+		"FAIL",
+		"UPDATE",
+		"DELETE_ITEM",
+		"DELETE_TOASTS",
+		{
+			prefix,
+		}
+	);
 
-const reducer = handleActions<ResourceState, ResourceObjType>(
+const reducer = handleActions<ResourceState, any>(
 	{
 		PENDING: (state) => ({
 			...state,
 		}),
 		SUCCESS: (state, action) => {
 			const { payload } = action;
-			const newData = [...state.data];
-			newData.unshift(payload);
+			const newData = [...payload];
 			return {
 				...state,
-				data: newData,
+				data: newData.concat([...state.data]),
 			};
 		},
-		FAIL: (state) => ({
-			...state,
-		}),
+		FAIL: (state, action) => {
+			console.log(action.payload);
+			return {
+				...state,
+				toast: state.toast.concat(action.payload),
+			};
+		},
 		UPDATE: (state, action) => {
 			const index = state.data.findIndex((v) => {
 				return v.data === action.payload.data;
@@ -68,6 +73,12 @@ const reducer = handleActions<ResourceState, ResourceObjType>(
 			return {
 				...state,
 				data: newState,
+			};
+		},
+		DELETE_TOASTS: (state) => {
+			return {
+				...state,
+				toast: [],
 			};
 		},
 	},
@@ -91,7 +102,7 @@ function* addLinkSaga(action: Action<ResourceType>) {
 			throw new Error("실패");
 		}
 		const data = { name: action.payload, data: action.payload };
-		yield put(success(data));
+		yield put(success([data]));
 	} catch (err) {
 		yield put(fail(err));
 	}
@@ -112,8 +123,14 @@ function* addImgSaga(action: Action<File[]>) {
 		const datas: (ResourceObjType | false)[] = yield call(() =>
 			getValidation(action.payload)
 		);
-		const fasleCount = datas.filter((v) => v === false);
-		console.log(datas, fasleCount);
+
+		yield put(
+			fail(
+				datas.map((v) => {
+					return v ? "성공" : "실패";
+				})
+			)
+		);
 		yield put(success(datas.filter((v) => v !== false)));
 	} catch (err) {
 		yield put(fail(err));

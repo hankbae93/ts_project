@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import { Layout, SideBar } from "./components";
+import { Layout, SideBar, Toast } from "./components";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -13,6 +13,7 @@ function App() {
 			<GlobalStyle />
 			<Layout>
 				<SideBar />
+				<Toast />
 			</Layout>
 		</>
 	);
