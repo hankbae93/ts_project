@@ -19,6 +19,18 @@ const Viewer = () => {
 		return <></>;
 	}
 
+	const getSrc = () => {
+		if (selectIndex !== null) {
+			const value = data[selectIndex].data;
+			if (typeof value === "string") {
+				return value;
+			} else if (typeof value === "object") {
+				const objURL = window.URL.createObjectURL(value);
+				return objURL;
+			}
+		}
+	};
+
 	return (
 		<Container>
 			<IframeHead contentEditable>
@@ -27,7 +39,7 @@ const Viewer = () => {
 					<TypedIcon icon='close_small' color='black' />
 				</IframeClose>
 			</IframeHead>
-			<IframeContent src={selectIndex !== null && data[selectIndex].data} />
+			<IframeContent src={getSrc()} />
 		</Container>
 	);
 };
