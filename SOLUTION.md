@@ -1,5 +1,7 @@
 # Resource 관리 웹 어플리케이션
 
+https://ranjafunc.github.io/typed_resource_list
+
 ## Stacks
 
     React Typescript Styled-components Redux-saga typed-design-system

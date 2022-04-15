@@ -29,6 +29,7 @@ export const {
 	deleteItem,
 	deleteToasts,
 	selectItem,
+	selectInitialize,
 } = createActions(
 	"PENDING",
 	"SUCCESS",
@@ -37,6 +38,7 @@ export const {
 	"DELETE_ITEM",
 	"DELETE_TOASTS",
 	"SELECT_ITEM",
+	"SELECT_INITIALIZE",
 	{
 		prefix,
 	}
@@ -81,6 +83,7 @@ const reducer = handleActions<ResourceState, any>(
 			return {
 				...state,
 				data: newState,
+				selectIndex: null,
 			};
 		},
 		DELETE_TOASTS: (state) => {
@@ -93,6 +96,12 @@ const reducer = handleActions<ResourceState, any>(
 			return {
 				...state,
 				selectIndex: action.payload,
+			};
+		},
+		SELECT_INITIALIZE: (state) => {
+			return {
+				...state,
+				selectIndex: null,
 			};
 		},
 	},
@@ -123,7 +132,7 @@ function* addLinkSaga(action: Action<string>) {
 		}
 		const data = { name: payload, data: result };
 		yield put(notice(["성공"]));
-		yield put(selectItem(null));
+		yield put(selectInitialize());
 		yield put(success([data]));
 	} catch (err) {
 		yield put(notice(["실패"]));
@@ -153,7 +162,7 @@ function* addImgSaga(action: Action<File[]>) {
 				})
 			)
 		);
-		yield put(selectItem(null));
+		yield put(selectInitialize());
 		yield put(success(datas.filter((v) => v !== false)));
 	} catch (err) {
 		console.log(err);
