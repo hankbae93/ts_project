@@ -24,7 +24,7 @@ const prefix = "resource";
 export const {
 	pending,
 	success,
-	fail,
+	notice,
 	update,
 	deleteItem,
 	deleteToasts,
@@ -32,7 +32,7 @@ export const {
 } = createActions(
 	"PENDING",
 	"SUCCESS",
-	"FAIL",
+	"NOTICE",
 	"UPDATE",
 	"DELETE_ITEM",
 	"DELETE_TOASTS",
@@ -55,8 +55,7 @@ const reducer = handleActions<ResourceState, any>(
 				data: newData.concat([...state.data]),
 			};
 		},
-		FAIL: (state, action) => {
-			console.log(action.payload);
+		NOTICE: (state, action) => {
 			return {
 				...state,
 				toast: state.toast.concat(action.payload),
@@ -113,21 +112,20 @@ function* addLinkSaga(action: Action<string>) {
 		yield put(pending());
 		yield call(getRandomDelay);
 		const isValidate = getRandom();
-		let payload = action.payload;
-		if (!isValidate) {
-			yield put(fail(["실패"]));
-		}
+		if (!isValidate) throw new Error();
 
+		const { payload } = action;
+		let result = payload;
 		if (payload.includes("www.youtube.com")) {
 			const params = new URL(payload).searchParams;
 			let v = params.get("v");
-			payload = `https://www.youtube.com/embed/${v}`;
+			result = `https://www.youtube.com/embed/${v}`;
 		}
-
-		const data = { name: payload, data: payload };
+		const data = { name: payload, data: result };
+		yield put(notice(["성공"]));
 		yield put(success([data]));
 	} catch (err) {
-		console.log(err);
+		yield put(notice(["실패"]));
 	}
 }
 
@@ -148,7 +146,7 @@ function* addImgSaga(action: Action<File[]>) {
 		);
 
 		yield put(
-			fail(
+			notice(
 				datas.map((v) => {
 					return v ? "성공" : "실패";
 				})
