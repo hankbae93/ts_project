@@ -10,8 +10,8 @@ interface ListProps {
 const List = ({ list }: ListProps) => {
 	return (
 		<Container>
-			{list.map((value) => (
-				<ListItem value={value} />
+			{list.map((value, index) => (
+				<ListItem key={index} value={value} />
 			))}
 		</Container>
 	);
