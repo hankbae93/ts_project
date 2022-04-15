@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ContentEditable from "react-contenteditable";
 
 export const Container = styled.div`
 	flex: 1;
