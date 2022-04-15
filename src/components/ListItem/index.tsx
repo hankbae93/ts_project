@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { ResourceObjType } from "../../types";
 import { TypedIcon } from "typed-design-system";
 import useListItem from "./useListItem";
 
-import { Container, ItemTitle, ItemTools, ItemButton } from "./style";
+import {
+	Container,
+	ItemTitle,
+	ItemTools,
+	ItemButton,
+	ItemEditTitle,
+} from "./style";
 
 interface ListItemProps {
 	value: ResourceObjType;
@@ -12,7 +18,8 @@ interface ListItemProps {
 const ListItem = ({ value }: ListItemProps) => {
 	const {
 		isEdit,
-		textEl,
+		text,
+		onChange,
 		handleSelect,
 		handleEdit,
 		handleDelete,
@@ -20,14 +27,9 @@ const ListItem = ({ value }: ListItemProps) => {
 	} = useListItem(value);
 
 	return (
-		<Container
-			onClick={handleSelect}
-			isSelect={checkSelected()}
-			suppressContentEditableWarning={true}
-		>
-			<ItemTitle ref={textEl} contentEditable={isEdit}>
-				{value.name}
-			</ItemTitle>
+		<Container onClick={handleSelect} isSelect={checkSelected()}>
+			<ItemTitle isEdit={isEdit}>{text}</ItemTitle>
+			<ItemEditTitle isEdit={isEdit} value={text} onChange={onChange} />
 
 			<ItemTools>
 				<ItemButton onClick={handleEdit}>

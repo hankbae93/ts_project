@@ -19,23 +19,33 @@ export const Container = styled.div<{ isSelect: boolean }>`
 	`}
 `;
 
-export const ItemTitle = styled.div`
-	flex: 1;
-	width: 100%;
-	font-size: 14px;
+export const ItemTitle = styled.div<{ isEdit: boolean }>`
+	display: ${({ isEdit }) => (isEdit ? "none" : "-webkit-box")};
 	overflow: hidden;
-	display: -webkit-box;
+	font-size: 14px;
+	line-height: 16px;
 	word-break: break-all;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
 	text-overflow: ellipsis;
-	box-sizing: border-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+`;
 
-	${({ contentEditable }) =>
-		contentEditable &&
-		`
-	border: 1px solid #38A5E1;
-	`}
+export const ItemEditTitle = styled.input<{ isEdit: boolean }>`
+	display: ${({ isEdit }) => (isEdit ? "flex" : "none")};
+	position: relative;
+	top: -9px;
+	left: -8px;
+	padding: 8px 6px;
+	width: 250px;
+	height: 30px;
+	font-size: 14px;
+	border: 1px solid #38a5e1;
+	box-sizing: border-box;
+	border-radius: 3px;
+
+	&:focus {
+		outline: none;
+	}
 `;
 
 export const ItemTools = styled.div`

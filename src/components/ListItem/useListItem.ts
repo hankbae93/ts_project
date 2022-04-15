@@ -8,6 +8,7 @@ const useListItem = (value: ResourceObjType) => {
 	const { selectIndex, data } = useSelector<RootState, ResourceState>(
 		(state) => state.resource
 	);
+	const [text, setText] = useState(value.name);
 	const [isEdit, setIsEdit] = useState(false);
 	const textEl = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -18,9 +19,8 @@ const useListItem = (value: ResourceObjType) => {
 
 	const handleEdit = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
-		if (isEdit && textEl.current) {
-			const newValue = textEl.current.textContent;
-			dispatch(update({ name: newValue, data: value.data }));
+		if (isEdit) {
+			dispatch(update({ name: text, data: value.data }));
 		}
 		setIsEdit((prev) => !prev);
 	};
@@ -34,9 +34,14 @@ const useListItem = (value: ResourceObjType) => {
 		return selectIndex !== null && data[selectIndex].data === value.data;
 	};
 
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setText(e.target.value);
+	};
+
 	return {
 		isEdit,
-		textEl,
+		text,
+		onChange,
 		handleSelect,
 		handleEdit,
 		handleDelete,
