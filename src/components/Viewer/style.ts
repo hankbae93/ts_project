@@ -8,6 +8,8 @@ export const Container = styled.div`
 `;
 
 export const IframeHead = styled.div`
+	position: relative;
+
 	height: 50px;
 	padding: 17px;
 	background-color: #fff;
@@ -15,6 +17,13 @@ export const IframeHead = styled.div`
 	box-sizing: border-box;
 `;
 
-export const IframeContent = styled.iframe`
+export const IframeClose = styled.div`
+	position: absolute;
+	right: 17px;
+	top: 17px;
+	cursor: pointer;
+`;
+
+export const IframeContent = styled.iframe<{ src: any }>`
 	flex: 1;
 `;

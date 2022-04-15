@@ -21,20 +21,26 @@ const initialState: ResourceState = {
 
 const prefix = "resource";
 
-export const { pending, success, fail, update, deleteItem, deleteToasts } =
-	createActions(
-		"PENDING",
-		"SUCCESS",
-		"FAIL",
-		"UPDATE",
-		"DELETE_ITEM",
-		"DELETE_TOASTS",
-		"SELECT_ITEM",
-		"SELECT_ITEM",
-		{
-			prefix,
-		}
-	);
+export const {
+	pending,
+	success,
+	fail,
+	update,
+	deleteItem,
+	deleteToasts,
+	selectItem,
+} = createActions(
+	"PENDING",
+	"SUCCESS",
+	"FAIL",
+	"UPDATE",
+	"DELETE_ITEM",
+	"DELETE_TOASTS",
+	"SELECT_ITEM",
+	{
+		prefix,
+	}
+);
 
 const reducer = handleActions<ResourceState, any>(
 	{
@@ -82,6 +88,12 @@ const reducer = handleActions<ResourceState, any>(
 			return {
 				...state,
 				toast: [],
+			};
+		},
+		SELECT_ITEM: (state, action) => {
+			return {
+				...state,
+				selectIndex: action.payload,
 			};
 		},
 	},

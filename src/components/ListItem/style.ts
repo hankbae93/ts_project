@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div<{ isSelect: boolean }>`
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
@@ -11,6 +11,12 @@ export const Container = styled.div`
 	border-radius: 10px;
 	padding: 12px;
 	box-sizing: border-box;
+
+	${({ isSelect }) =>
+		isSelect &&
+		`
+		border: 1px solid #38A5E1;
+	`}
 `;
 
 export const ItemTitle = styled.div`
