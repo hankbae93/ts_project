@@ -1,18 +1,14 @@
-import { useSelector, useDispatch } from "react-redux";
+import useResourceState from "../../../hooks/useResourceState";
 import { selectItem } from "../../../redux/modules/resource";
-import { RootState, ResourceState } from "../../../types";
 
 const useViewer = () => {
-	const dispatch = useDispatch();
-	const { selectId, data } = useSelector<RootState, ResourceState>(
-		(state) => state.resource
-	);
+	const { dispatch, selectId, data } = useResourceState();
 
-	const handleClose = () => {
+	const handleClose = (): void => {
 		dispatch(selectItem(null));
 	};
 
-	const getSrc = () => {
+	const getSrc = (): string | void => {
 		if (selectId !== null) {
 			const index = data.findIndex((v) => v.id === selectId);
 			const value = data[index].data;
@@ -25,7 +21,7 @@ const useViewer = () => {
 		}
 	};
 
-	const getTitle = () => {
+	const getTitle = (): string | void => {
 		if (selectId !== null) {
 			const index = data.findIndex((v) => v.id === selectId);
 			return data[index].name;

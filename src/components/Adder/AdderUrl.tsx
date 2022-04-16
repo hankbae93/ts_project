@@ -13,6 +13,7 @@ const AdderUrl = () => {
 	return (
 		<>
 			<AddUrlButton onClick={handleUrlClick}>URL 추가</AddUrlButton>
+
 			{isOpen && (
 				<AddLinkModal onSubmit={onSubmit}>
 					<AddInput error={error} />

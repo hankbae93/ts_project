@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import useResourceState from "../../hooks/useResourceState";
 import { deleteToasts } from "../../redux/modules/resource";
-import { RootState } from "../../types";
 import { Container, ToastItem } from "./style";
 
 const Toast = () => {
-	const dispatch = useDispatch();
-	const toast = useSelector<RootState, string[]>(
-		(state) => state.resource.toast
-	);
+	const { dispatch, toast } = useResourceState();
 
 	useEffect(() => {
 		if (toast.length > 0) {

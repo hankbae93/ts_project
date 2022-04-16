@@ -1,8 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import styled, { keyframes } from "styled-components";
-import { RootState } from "../../types";
+import styled from "styled-components";
 import { ReactComponent as LoadingSvg } from "../../assets/Spinner-1s-200px.svg";
+import useResourceState from "../../hooks/useResourceState";
 
 const LoadingIcon = styled.div`
 	position: absolute;
@@ -12,9 +11,7 @@ const LoadingIcon = styled.div`
 `;
 
 const LoadingProgressBar = () => {
-	const loading = useSelector<RootState, boolean>(
-		(state) => state.resource.loading
-	);
+	const { loading } = useResourceState();
 
 	if (!loading) {
 		return null;

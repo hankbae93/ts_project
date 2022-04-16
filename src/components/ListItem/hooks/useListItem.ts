@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useResourceState from "../../../hooks/useResourceState";
 import {
 	deleteItem,
 	selectItem,
 	update,
 } from "../../../redux/modules/resource";
-import { ResourceObjType, ResourceState, RootState } from "../../../types";
+import { ResourceObjType } from "../../../types";
 
 const useListItem = (value: ResourceObjType) => {
-	const dispatch = useDispatch();
-	const { selectId, data } = useSelector<RootState, ResourceState>(
-		(state) => state.resource
-	);
+	const { selectId, dispatch } = useResourceState();
 	const [text, setText] = useState(value.name);
 	const [isEdit, setIsEdit] = useState(false);
 
