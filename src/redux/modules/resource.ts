@@ -2,7 +2,11 @@ import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ResourceObjType, ResourceState } from "../../types";
 import { v4 as uuidv4 } from "uuid";
-import { getRandomDelay, getRandom } from "../../utils/getRandom";
+import {
+	getRandomDelay,
+	getRandom,
+	getRandomTime,
+} from "../../utils/getRandom";
 
 const initialState: ResourceState = {
 	data: [
@@ -134,17 +138,13 @@ function* addLinkSaga(action: Action<string>) {
 	}
 }
 
-function getRandomDee(cb: Function) {
-	const time = Math.floor(Math.random() * 700 + 300);
-	setTimeout(() => cb(), time);
-}
-
-function getValidation(datas: File[]) {
+function getValidation(datas: Promise<File>[]) {
 	return Promise.all(
-		datas.map(async (v: File) => {
-			await getRandomDelay();
-			const isValidate = await getRandom();
-			return isValidate && { id: uuidv4(), name: v.name, data: v };
+		datas.map(async (v: Promise<File>) => {
+			const result = await v;
+			const isValidate = getRandom();
+			const data = { id: uuidv4(), name: result.name, data: result };
+			return isValidate && data;
 		})
 	);
 }
@@ -152,14 +152,28 @@ function getValidation(datas: File[]) {
 function* addImgSaga(action: Action<File[]>) {
 	try {
 		yield put(pending());
+
+		let totalDelay = 0;
+		const promiseArr: Promise<File>[] = action.payload.map((v) => {
+			const time = getRandomTime();
+			totalDelay += time;
+			return new Promise((resolve) => setTimeout(resolve, totalDelay)).then(
+				() => {
+					console.log(`${time} delay`);
+					return v;
+				}
+			);
+		});
+		console.time("promise start");
 		const datas: (ResourceObjType | false)[] = yield call(() =>
-			getValidation(action.payload)
+			getValidation(promiseArr)
 		);
-		console.log("dd");
+		console.timeEnd("promise start");
+
 		yield put(
 			notice(
 				datas.map((v) => {
-					return v ? "성공" : "실패";
+					return v ? "등록 성공" : "등록 실패";
 				})
 			)
 		);

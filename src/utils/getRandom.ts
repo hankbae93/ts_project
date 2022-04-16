@@ -11,4 +11,4 @@ const getRandom = () => {
 	return Math.random() <= 0.8;
 };
 
-export { getRandomDelay, getRandom };
+export { getRandomTime, getRandomDelay, getRandom };
