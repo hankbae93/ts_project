@@ -4,7 +4,7 @@ import { RootState, ResourceState } from "../../../types";
 
 const useViewer = () => {
 	const dispatch = useDispatch();
-	const { selectIndex, data } = useSelector<RootState, ResourceState>(
+	const { selectId, data } = useSelector<RootState, ResourceState>(
 		(state) => state.resource
 	);
 
@@ -13,8 +13,8 @@ const useViewer = () => {
 	};
 
 	const getSrc = () => {
-		if (selectIndex !== null) {
-			const index = data.findIndex((v) => v.id === selectIndex);
+		if (selectId !== null) {
+			const index = data.findIndex((v) => v.id === selectId);
 			const value = data[index].data;
 			if (typeof value === "string") {
 				return value;
@@ -26,14 +26,14 @@ const useViewer = () => {
 	};
 
 	const getTitle = () => {
-		if (selectIndex !== null) {
-			const index = data.findIndex((v) => v.id === selectIndex);
+		if (selectId !== null) {
+			const index = data.findIndex((v) => v.id === selectId);
 			return data[index].name;
 		}
 	};
 
 	return {
-		selectIndex,
+		selectId,
 		handleClose,
 		getSrc,
 		getTitle,

@@ -10,7 +10,7 @@ export interface ResourceState {
 	data: ResourceObjType[];
 	loading: boolean;
 	toast: string[];
-	selectIndex: string | null;
+	selectId: string | null;
 }
 
 /*  리덕스 타입  */

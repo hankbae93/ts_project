@@ -9,7 +9,7 @@ import { ResourceObjType, ResourceState, RootState } from "../../../types";
 
 const useListItem = (value: ResourceObjType) => {
 	const dispatch = useDispatch();
-	const { selectIndex, data } = useSelector<RootState, ResourceState>(
+	const { selectId, data } = useSelector<RootState, ResourceState>(
 		(state) => state.resource
 	);
 	const [text, setText] = useState(value.name);
@@ -37,7 +37,7 @@ const useListItem = (value: ResourceObjType) => {
 	};
 
 	const checkSelected = () => {
-		return selectIndex === value.id;
+		return selectId === value.id;
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

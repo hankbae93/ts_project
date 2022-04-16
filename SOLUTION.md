@@ -33,19 +33,20 @@ https://ranjafunc.github.io/typed_resource_list
 const initialState: ResourceState = {
 	data: [
 		name: '리액트 관련 문서',
-        data: 'https://www.robinwieruch.de/react-libraries/'
+    	data: 'https://www.robinwieruch.de/react-libraries/'
 	],
 	loading: false,
 	toast: [],
-	selectIndex: null,
+	selectId: null,
 };
 ```
 
 <strong style='font-size:16px;'>Redux Resource 구조</strong>
 
 - data: 한개의 리소스에는 제목과 해당 데이터를 가진 객체 구조로 구성
+- loading: 리소스 등록과정에서 생기는 지연시간동안 사용자에게 로딩 안내하기 위한 변수
 - toast: 리소스 등록과정 중 생기는 성공,실패 여부를 저장할 배열
-- selectIndex: 특정 리소스를 읽어올 때 선택된 리소스의 인덱스를 저장할 변수
+- selectId: 특정 리소스를 읽어올 때 선택된 리소스의 id를 저장할 변수
 
 <br />
 <hr/>
@@ -149,43 +150,42 @@ const initialState: ResourceState = {
       	initialState,
       	{ prefix }
       );
+
+      	// components/toast
+      	const Toast = () => {
+      		const dispatch = useDispatch();
+      		const toast = useSelector<RootState, string[]>(
+      			(state) => state.resource.toast
+      		);
+
+      		useEffect(() => {
+      			if (toast.length > 0) {
+      				setTimeout(() => {
+      					dispatch(deleteToasts());
+      				}, 3000);
+      			}
+      		}, [toast]);
+
+      		return (
+      			<Container>
+      				{toast.map((message, i) => {
+      					return <ToastItem isSuccess={message !== "실패"}>{message}</ToastItem>;
+      				})}
+      			</Container>
+      		);
+      	};
       ```
 
-          ```ts
-          // components/toast
-          const Toast = () => {
-          	const dispatch = useDispatch();
-          	const toast = useSelector<RootState, string[]>(
-          		(state) => state.resource.toast
-          	);
-
-          	useEffect(() => {
-          		if (toast.length > 0) {
-          			setTimeout(() => {
-          				dispatch(deleteToasts());
-          			}, 3000);
-          		}
-          	}, [toast]);
-
-          	return (
-          		<Container>
-          			{toast.map((message, i) => {
-          				return <ToastItem isSuccess={message !== "실패"}>{message}</ToastItem>;
-          			})}
-          		</Container>
-          	);
-          };
-          ```
-
-  4.  이미지 파일 리소스 다중 등록 시 개별로 검증 과정이 필요하여 Promise.all을 활용하여 처리하였습니다.
+  4.  이미지 파일 리소스 다중 등록 시 개별로 검증 과정과 지연시간이 필요하여 Promise.all을 활용하여 처리하였습니다.
 
       ```ts
-      function getValidation(datas: File[]) {
+      function getValidation(datas: Promise<File>[]) {
       	return Promise.all(
-      		datas.map(async (v: File) => {
-      			const isValidate = await getRandom();
-      			// 검증 실패 시 데이터 대신 false 반환
-      			return isValidate && { name: v.name, data: v };
+      		datas.map(async (v: Promise<File>) => {
+      			const result = await v;
+      			const isValidate = getRandom();
+      			const data = { id: uuidv4(), name: result.name, data: result };
+      			return isValidate && data;
       		})
       	);
       }
@@ -193,9 +193,24 @@ const initialState: ResourceState = {
       function* addImgSaga(action: Action<File[]>) {
       	try {
       		yield put(pending());
+
+      		let totalDelay = 0;
+      		const promiseArr: Promise<File>[] = action.payload.map((v) => {
+      			const time = getRandomTime();
+      			totalDelay += time;
+      			return new Promise((resolve) =>
+      				setTimeout(resolve, totalDelay)
+      			).then(() => {
+      				console.log(`${time} delay`);
+      				return v;
+      			});
+      		});
+
+      		console.time("promise start");
       		const datas: (ResourceObjType | false)[] = yield call(() =>
-      			getValidation(action.payload)
+      			getValidation(promiseArr)
       		);
+      		console.timeEnd("promise start");
 
       		yield put(
       			notice(
@@ -314,3 +329,5 @@ const initialState: ResourceState = {
 ## 1. 링크형 리소스 등록 시 올바르지 않은 도메인 주소일때 컬러 처리
 
 <img src="./docs_image/ux1.png" />
+
+## 2. 등록 시간동안 로딩창 UI 추가

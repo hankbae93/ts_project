@@ -4,9 +4,9 @@ import useViewer from "./hooks/useViewer";
 import { Container, IframeContent, IframeHead, IframeClose } from "./style";
 
 const Viewer = () => {
-	const { selectIndex, handleClose, getSrc, getTitle } = useViewer();
+	const { selectId, handleClose, getSrc, getTitle } = useViewer();
 
-	if (selectIndex === null) {
+	if (selectId === null) {
 		return <></>;
 	}
 

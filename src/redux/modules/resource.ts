@@ -23,7 +23,7 @@ const initialState: ResourceState = {
 	],
 	loading: false,
 	toast: [],
-	selectIndex: null,
+	selectId: null,
 };
 
 const prefix = "resource";
@@ -90,8 +90,7 @@ const reducer = handleActions<ResourceState, any>(
 			return {
 				...state,
 				data: newState,
-				selectIndex:
-					action.payload === state.selectIndex ? null : state.selectIndex,
+				selectId: action.payload === state.selectId ? null : state.selectId,
 			};
 		},
 		DELETE_TOASTS: (state) => {
@@ -103,7 +102,7 @@ const reducer = handleActions<ResourceState, any>(
 		SELECT_ITEM: (state, action: Action<string>) => {
 			return {
 				...state,
-				selectIndex: action.payload,
+				selectId: action.payload,
 			};
 		},
 	},
