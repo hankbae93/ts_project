@@ -14,7 +14,8 @@ const useViewer = () => {
 
 	const getSrc = () => {
 		if (selectIndex !== null) {
-			const value = data[selectIndex].data;
+			const index = data.findIndex((v) => v.id === selectIndex);
+			const value = data[index].data;
 			if (typeof value === "string") {
 				return value;
 			} else if (typeof value === "object") {
@@ -25,7 +26,10 @@ const useViewer = () => {
 	};
 
 	const getTitle = () => {
-		return selectIndex !== null && data[selectIndex].name;
+		if (selectIndex !== null) {
+			const index = data.findIndex((v) => v.id === selectIndex);
+			return data[index].name;
+		}
 	};
 
 	return {

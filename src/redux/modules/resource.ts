@@ -1,15 +1,18 @@
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ResourceObjType, ResourceState } from "../../types";
+import { v4 as uuidv4 } from "uuid";
 import { getRandomDelay, getRandom } from "../../utils/getRandom";
 
 const initialState: ResourceState = {
 	data: [
 		{
+			id: uuidv4(),
 			name: "https://www.robinwieruch.de/react-libraries/",
 			data: "https://www.robinwieruch.de/react-libraries/",
 		},
 		{
+			id: uuidv4(),
 			name: "https://typed.blog/how-to-write-a-better-research-paper-faster/",
 			data: "https://typed.blog/how-to-write-a-better-research-paper-faster/",
 		},
@@ -57,7 +60,7 @@ const reducer = handleActions<ResourceState, any>(
 				data: newData.concat([...state.data]),
 			};
 		},
-		NOTICE: (state, action) => {
+		NOTICE: (state, action: Action<string[]>) => {
 			return {
 				...state,
 				toast: state.toast.concat(action.payload),
@@ -75,15 +78,16 @@ const reducer = handleActions<ResourceState, any>(
 				data: newState,
 			};
 		},
-		DELETE_ITEM: (state, action) => {
+		DELETE_ITEM: (state, action: Action<string>) => {
 			const newState = [...state.data].filter((v) => {
-				return v.data !== action.payload.data;
+				return v.id !== action.payload;
 			});
 
 			return {
 				...state,
 				data: newState,
-				selectIndex: null,
+				selectIndex:
+					action.payload === state.selectIndex ? null : state.selectIndex,
 			};
 		},
 		DELETE_TOASTS: (state) => {
@@ -130,9 +134,8 @@ function* addLinkSaga(action: Action<string>) {
 			let v = params.get("v");
 			result = `https://www.youtube.com/embed/${v}`;
 		}
-		const data = { name: payload, data: result };
+		const data = { id: uuidv4(), name: payload, data: result };
 		yield put(notice(["성공"]));
-		yield put(selectInitialize());
 		yield put(success([data]));
 	} catch (err) {
 		yield put(notice(["실패"]));
@@ -143,7 +146,7 @@ function getValidation(datas: File[]) {
 	return Promise.all(
 		datas.map(async (v: File) => {
 			const isValidate = await getRandom();
-			return isValidate && { name: v.name, data: v };
+			return isValidate && { id: uuidv4(), name: v.name, data: v };
 		})
 	);
 }
@@ -162,7 +165,6 @@ function* addImgSaga(action: Action<File[]>) {
 				})
 			)
 		);
-		yield put(selectInitialize());
 		yield put(success(datas.filter((v) => v !== false)));
 	} catch (err) {
 		console.log(err);

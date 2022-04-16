@@ -241,38 +241,38 @@ const initialState: ResourceState = {
 - ListItem 컴포넌트에 리소스 삭제, 편집, 선택 등 관심사를 집중시켜 작성햇습니다.
 
   ```ts
+  import React from "react";
+  import { ResourceObjType } from "../../types";
+  import { TypedIcon } from "typed-design-system";
+  import useListItem from "./hooks/useListItem";
+
+  import {
+  	Container,
+  	ItemTitle,
+  	ItemTools,
+  	ItemButton,
+  	ItemEditTitle,
+  } from "./style";
+
   interface ListItemProps {
   	value: ResourceObjType;
   }
 
   const ListItem = ({ value }: ListItemProps) => {
-  	const { selectIndex, data } = useSelector<RootState, ResourceState>(
-  		(state) => state.resource
-  	);
-  	const dispatch = useDispatch();
-  	const [isEdit, setIsEdit] = useState(false);
-  	const textEl = useRef() as React.MutableRefObject<HTMLDivElement>;
-
-  	const handleSelect = () => {
-  		// 클릭 시 해당 props의 데이터와 redux의 data 배열의 객체와 비교하여 index 저장
-  	};
-
-  	const handleEdit = () => {
-  		// isEdit 상태변수 활용하여 클릭했을 때 true였으면 현재 element 텍스트로 기존 데이터 업데이트
-  	};
-
-  	const handleDelete = () => {
-  		// 클릭 시 redux의 data 배열에서 해당 객체 삭제 처리
-  	};
+  	const {
+  		isEdit,
+  		text,
+  		onChange,
+  		handleSelect, // 클릭 시 해당 props의 데이터와 redux의 data 배열의 객체와 비교하여 index 저장
+  		handleEdit, // isEdit 상태변수 활용하여 클릭했을 때 true였으면 현재 element 텍스트로 기존 데이터 업데이트
+  		handleDelete, // 클릭 시 redux의 data 배열에서 해당 객체 삭제 처리
+  		checkSelected,
+  	} = useListItem(value);
 
   	return (
-  		<Container
-  			onClick={handleSelect}
-  			isSelect={selectIndex !== null && data[selectIndex].data === value.data}
-  		>
-  			<ItemTitle ref={textEl} contentEditable={isEdit}>
-  				{value.name}
-  			</ItemTitle>
+  		<Container onClick={handleSelect} isSelect={checkSelected()}>
+  			<ItemTitle isEdit={isEdit}>{text}</ItemTitle>
+  			<ItemEditTitle isEdit={isEdit} value={text} onChange={onChange} />
 
   			<ItemTools>
   				<ItemButton onClick={handleEdit}>
@@ -297,7 +297,8 @@ const initialState: ResourceState = {
 
 <img src="./docs_image/select.png"/>
 
-- Sidebar의 리소스 아이템을 클릭할 시 해당 index를 selectIndex로 저장
+- <U style="text-decoration: line-through;">Sidebar의 리소스 아이템을 클릭할 시 해당 index를 selectIndex로 저장</U>
+- Sidebar의 리소스 아이템을 클릭할 시 해당 id를 selectIndex로 저장
 - Viewer에서는 selectIndex의 값이 존재할 때만 아이프레임을 보여주도록 분기처리하엿습니다.
 
 <br/>

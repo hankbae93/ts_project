@@ -20,8 +20,7 @@ const useListItem = (value: ResourceObjType) => {
 	}, [value]);
 
 	const handleSelect = (e: React.MouseEvent<HTMLDivElement>) => {
-		const index = data.findIndex((v) => v.data === value.data);
-		dispatch(selectItem(index));
+		dispatch(selectItem(value.id));
 	};
 
 	const handleEdit = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -34,11 +33,11 @@ const useListItem = (value: ResourceObjType) => {
 
 	const handleDelete = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
-		dispatch(deleteItem(value));
+		dispatch(deleteItem(value.id));
 	};
 
 	const checkSelected = () => {
-		return selectIndex !== null && data[selectIndex].data === value.data;
+		return selectIndex === value.id;
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
