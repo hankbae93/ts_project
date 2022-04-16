@@ -13,8 +13,12 @@ export const ToastItem = styled.div<{ isSuccess: boolean }>`
 	justify-content: center;
 	align-items: center;
 	width: 250px;
-	height: 50px;
+	height: 150px;
 	margin-bottom: 10px;
-	font-weight: 500;
+	padding: 10px;
 	background-color: ${({ isSuccess }) => (isSuccess ? "#6BCB77" : "#FF6B6B")};
+	word-break: break-all;
+	font-weight: 500;
+	border-radius: 5px;
+	box-sizing: border-box;
 `;

@@ -134,9 +134,15 @@ function* addLinkSaga(action: Action<string>) {
 	}
 }
 
+function getRandomDee(cb: Function) {
+	const time = Math.floor(Math.random() * 700 + 300);
+	setTimeout(() => cb(), time);
+}
+
 function getValidation(datas: File[]) {
 	return Promise.all(
 		datas.map(async (v: File) => {
+			await getRandomDelay();
 			const isValidate = await getRandom();
 			return isValidate && { id: uuidv4(), name: v.name, data: v };
 		})
@@ -149,7 +155,7 @@ function* addImgSaga(action: Action<File[]>) {
 		const datas: (ResourceObjType | false)[] = yield call(() =>
 			getValidation(action.payload)
 		);
-
+		console.log("dd");
 		yield put(
 			notice(
 				datas.map((v) => {

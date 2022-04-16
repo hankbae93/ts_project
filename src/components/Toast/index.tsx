@@ -21,7 +21,11 @@ const Toast = () => {
 	return (
 		<Container>
 			{toast.map((message, i) => {
-				return <ToastItem isSuccess={message !== "실패"}>{message}</ToastItem>;
+				return (
+					<ToastItem key={i} isSuccess={message.includes("등록 성공")}>
+						{message}
+					</ToastItem>
+				);
 			})}
 		</Container>
 	);
