@@ -8,16 +8,18 @@ const useViewer = () => {
 		dispatch(selectItem(null));
 	};
 
-	const getSrc = (): string | void => {
+	const getSrc = () => {
 		if (selectId !== null) {
 			const index = data.findIndex((v) => v.id === selectId);
 			const value = data[index].data;
 			if (typeof value === "string") {
-				return value;
+				return { data: value, type: "iframe" };
 			} else if (typeof value === "object") {
 				const objURL = window.URL.createObjectURL(value);
-				return objURL;
+				return { data: objURL, type: "img" };
 			}
+
+			return null;
 		}
 	};
 

@@ -27,4 +27,7 @@ export const IframeClose = styled.div`
 
 export const IframeContent = styled.iframe<{ src: any }>`
 	flex: 1;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 `;

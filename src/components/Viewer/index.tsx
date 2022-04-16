@@ -19,7 +19,11 @@ const Viewer = () => {
 				</IframeClose>
 			</IframeHead>
 
-			<IframeContent src={getSrc()} />
+			{getSrc()?.type === "iframe" ? (
+				<IframeContent as='iframe' src={getSrc()?.data} />
+			) : (
+				<IframeContent as='img' src={getSrc()?.data} />
+			)}
 		</Container>
 	);
 };
