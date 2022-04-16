@@ -21,7 +21,7 @@ const useViewer = () => {
 		}
 	};
 
-	const getTitle = (): string | void => {
+	const getTitle = () => {
 		if (selectId !== null) {
 			const index = data.findIndex((v) => v.id === selectId);
 			return data[index].name;
