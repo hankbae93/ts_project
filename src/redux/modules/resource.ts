@@ -32,7 +32,6 @@ export const {
 	deleteItem,
 	deleteToasts,
 	selectItem,
-	selectInitialize,
 } = createActions(
 	"PENDING",
 	"SUCCESS",
@@ -41,7 +40,6 @@ export const {
 	"DELETE_ITEM",
 	"DELETE_TOASTS",
 	"SELECT_ITEM",
-	"SELECT_INITIALIZE",
 	{
 		prefix,
 	}
@@ -66,12 +64,12 @@ const reducer = handleActions<ResourceState, any>(
 				toast: state.toast.concat(action.payload),
 			};
 		},
-		UPDATE: (state, action) => {
+		UPDATE: (state, action: Action<ResourceObjType>) => {
 			const index = state.data.findIndex((v) => {
-				return v.data === action.payload.data;
+				return v.id === action.payload.id;
 			});
 			const newState = [...state.data];
-			newState[index] = action.payload;
+			newState[index].name = action.payload.name;
 
 			return {
 				...state,
@@ -96,16 +94,10 @@ const reducer = handleActions<ResourceState, any>(
 				toast: [],
 			};
 		},
-		SELECT_ITEM: (state, action) => {
+		SELECT_ITEM: (state, action: Action<string>) => {
 			return {
 				...state,
 				selectIndex: action.payload,
-			};
-		},
-		SELECT_INITIALIZE: (state) => {
-			return {
-				...state,
-				selectIndex: null,
 			};
 		},
 	},

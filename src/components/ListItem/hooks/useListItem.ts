@@ -26,7 +26,7 @@ const useListItem = (value: ResourceObjType) => {
 	const handleEdit = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		if (isEdit) {
-			dispatch(update({ name: text, data: value.data }));
+			dispatch(update({ ...value, name: text }));
 		}
 		setIsEdit((prev) => !prev);
 	};
