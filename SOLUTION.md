@@ -282,7 +282,7 @@ const initialState: ResourceState = {
   		isEdit,
   		text,
   		onChange,
-  		handleSelect, // 클릭 시 해당 props의 데이터와 redux의 data 배열의 객체와 비교하여 index 저장
+  		handleSelect, // 클릭 시 해당 props의 id  저장
   		handleEdit, // isEdit 상태변수 활용하여 클릭했을 때 true였으면 현재 element 텍스트로 기존 데이터 업데이트
   		handleDelete, // 클릭 시 redux의 data 배열에서 해당 객체 삭제 처리
   		checkSelected,
