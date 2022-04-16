@@ -20,6 +20,7 @@ const ListItem = ({ value }: ListItemProps) => {
 		isEdit,
 		text,
 		onChange,
+		onKeyUp,
 		handleSelect,
 		handleEdit,
 		handleDelete,
@@ -29,7 +30,12 @@ const ListItem = ({ value }: ListItemProps) => {
 	return (
 		<Container onClick={handleSelect} isSelect={checkSelected()}>
 			<ItemTitle isEdit={isEdit}>{text}</ItemTitle>
-			<ItemEditTitle isEdit={isEdit} value={text} onChange={onChange} />
+			<ItemEditTitle
+				isEdit={isEdit}
+				value={text}
+				onChange={onChange}
+				onKeyUp={onKeyUp}
+			/>
 
 			<ItemTools>
 				<ItemButton onClick={handleEdit}>

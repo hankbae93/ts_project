@@ -41,10 +41,20 @@ const useListItem = (value: ResourceObjType) => {
 		setText(e.target.value);
 	};
 
+	const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			if (isEdit) {
+				dispatch(update({ ...value, name: text }));
+			}
+			setIsEdit((prev) => !prev);
+		}
+	};
+
 	return {
 		isEdit,
 		text,
 		onChange,
+		onKeyUp,
 		handleSelect,
 		handleEdit,
 		handleDelete,
