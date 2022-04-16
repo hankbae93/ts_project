@@ -16,8 +16,6 @@ const useLinkModal = () => {
 		e.preventDefault();
 		const { value } = e.currentTarget.children[0] as HTMLInputElement;
 
-		console.log(value, regex.test(value));
-
 		if (regex.test(value)) {
 			setIsOpen(false);
 			dispatch(addLinkSagaStart(value));

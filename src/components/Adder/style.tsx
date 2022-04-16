@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -35,10 +34,10 @@ export const AddButton = styled.button`
 export const AddUrlButton = styled(AddButton)``;
 export const AddImgButton = styled(AddButton)`
 	line-height: normal;
+`;
 
-	& input {
-		display: none;
-	}
+export const AddImgInput = styled.input`
+	display: none;
 `;
 
 export const AddLinkModal = styled.form`

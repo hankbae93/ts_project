@@ -4,11 +4,15 @@ https://ranjafunc.github.io/typed_resource_list
 
 ## Stacks
 
-    React Typescript Styled-components Redux-saga typed-design-system
+    React Typescript Styled-components Redux-saga typed-design-system uuid
 
 - Redux-Saga
 
   리소스 관리 기능들이 비동기적인 처리과정이 필요하고 View에서 로직을 분리해 체계적으로 관리하기 위해 사용하였습니다.
+
+- uuid
+
+  리소스별로 겹치지 않는 id를 주기 위해 사용하였습니다.
 
 <br />
 

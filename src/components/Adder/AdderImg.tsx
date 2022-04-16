@@ -1,6 +1,6 @@
 import React from "react";
 import useImgButton from "./hooks/useImgButton";
-import { AddImgButton } from "./style";
+import { AddImgButton, AddImgInput } from "./style";
 
 const AdderImg = () => {
 	const { onChange } = useImgButton();
@@ -8,7 +8,7 @@ const AdderImg = () => {
 	return (
 		<AddImgButton as='label' htmlFor='file'>
 			이미지 추가
-			<input
+			<AddImgInput
 				id='file'
 				type='file'
 				accept='image/jpeg, image/png'

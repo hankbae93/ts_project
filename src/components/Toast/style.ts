@@ -15,10 +15,9 @@ export const ToastItem = styled.div<{ isSuccess: boolean }>`
 	width: 250px;
 	height: 150px;
 	margin-bottom: 10px;
-	padding: 10px;
 	background-color: ${({ isSuccess }) => (isSuccess ? "#6BCB77" : "#FF6B6B")};
-	word-break: break-all;
 	font-weight: 500;
 	border-radius: 5px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 	box-sizing: border-box;
 `;

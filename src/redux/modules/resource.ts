@@ -53,12 +53,14 @@ const reducer = handleActions<ResourceState, any>(
 	{
 		PENDING: (state) => ({
 			...state,
+			loading: true,
 		}),
 		SUCCESS: (state, action) => {
 			const { payload } = action;
 			const newData = [...payload];
 			return {
 				...state,
+				loading: false,
 				data: newData.concat([...state.data]),
 			};
 		},
@@ -173,7 +175,7 @@ function* addImgSaga(action: Action<File[]>) {
 		yield put(
 			notice(
 				datas.map((v) => {
-					return v ? "등록 성공" : "등록 실패";
+					return v ? "성공" : "실패";
 				})
 			)
 		);
