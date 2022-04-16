@@ -1,5 +1,11 @@
 import React from "react";
-import { Layout, SideBar, Toast, Viewer } from "./components";
+import {
+	Layout,
+	LoadingProgressBar,
+	SideBar,
+	Toast,
+	Viewer,
+} from "./components";
 
 function App() {
 	return (
@@ -8,6 +14,7 @@ function App() {
 				<SideBar />
 				<Viewer />
 				<Toast />
+				<LoadingProgressBar />
 			</Layout>
 		</>
 	);
